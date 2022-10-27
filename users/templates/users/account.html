@@ -1,0 +1,135 @@
+{% extends 'main.html' %}
+
+{% block content %}
+  <!-- Main Section -->
+  <main class="settingsPage profile my-md">
+    <div class="container">
+      <div class="layout">
+        <div class="column column--1of3">
+          <div class="card text-center">
+            <div class="card__body dev">
+              <a class="tag tag--pill tag--main settings__btn" href="{% url 'edit-account' %}"><i class="im im-edit"></i> Edit</a>
+              <img class="avatar avatar--xl dev__avatar" src="{{profile.imageURL}}" />
+              <h2 class="dev__name">{{profile.name}}</h2>
+              <p class="dev__title">{{profile.tagline}}</p>
+              <p class="dev__location">Based in {{profile.location}}</p>
+              <ul class="dev__social">
+                {% if profile.social_twitter %}
+                <li>
+                  <a title="Twitter" href="{{profile.social_twitter}}" target="_blank" style="color:maroon;"><i class="im im-twitter"></i></a>
+                </li>
+                {% endif %}
+                {% if profile.social_facebook %}
+                <li>
+                  <a title="Facebook" href="{{profile.social_facebook}}" style="color: maroon;" target="_blank"><i class="im im-facebook"></i></a>
+                </li>
+                {% endif %}
+                {% if profile.social_instagram %}
+                <li>
+                  <a title="Instagram" href="{{profile.social_instagram}}" target="_blank"><i class="im im-instagram" style="color:maroon;"></i></a>
+                </li>
+                {% endif %}
+                {% if profile.resume %}
+                <li>
+                  <a title="Resume" href="{{profile.social_instagram}}" target="_blank"><i class="im im-paper-clip" style="color:maroon;"></i></a>
+                </li>
+                {% endif %}
+              </ul>
+              
+            </div>
+          </div>
+        </div>
+        <div class="column column--2of3">
+          <div class="devInfo">
+            <h3 class="devInfo__title">About Me</h3>
+            <p class="devInfo__about">
+              {{profile.bio}}
+            </p>
+          </div>
+          <div class="settings">
+            <h3 class="settings__title">Experience</h3>
+            <a class="tag tag--pill tag--main settings__btn tag--lg" href="{% url 'add-experience' %}"><i class="im im-plus"></i> Add Experience</a>
+          </div>
+
+          <table class="settings__table">
+            {% for experience in experiences %}
+            <tr>
+              <td class="settings__tableInfo">
+                <h4>{{experience.title}} - {{experience.employment_type}}</h4>
+
+                <p style="font-size: 12px">{{experience.start_date|date:"M Y"}} - 
+                {% if experience.is_currently_working %}
+                Present
+                {% else %}
+                {{experience.end_date|date:"M Y"}} 
+                {% endif %}</p>
+                <h3 style="font-size: 15px;">{{experience.work_place}} - {{experience.location}}</h3>
+                
+
+              </td>
+              <td class="settings__tableActions">
+                <a class="tag tag--pill tag--main settings__btn" href="{% url 'update-experience' experience.id %}"><i class="im im-edit"></i> Edit</a>
+                <a class="tag tag--pill tag--main settings__btn" href="{% url 'delete-experience' experience.id %}"><i class="im im-x-mark-circle-o"></i>
+                  Delete</a>
+              </td>
+            </tr>
+            {% endfor %}
+          </table>
+
+          <div class="settings">
+            <h3 class="settings__title">Education Details</h3>
+            <a class="tag tag--pill tag--main settings__btn tag--lg" href="{% url 'add-education' %}"><i class="im im-plus"></i> Add Education</a>
+          </div>
+
+          <table class="settings__table">
+            {% for education in educations %}
+            <tr>
+              <td class="settings__tableInfo">
+                <h4>{{education.schoolName}}</h4>
+                <h3 style="font-size: 15px;">{{education.degree}} - {{education.field_of_study}}, {{education.grade}}</h3>
+                <p style="font-size: 12px">{{education.start_date|date:"Y"}} - {{education.end_date|date:"Y"}} </p>
+                <p style="margin-top: 15px;">
+                  {% if education.description %}
+                    {{ education.description }}
+                  {% endif %}
+                  </p>
+                
+              </td>
+              <td class="settings__tableActions">
+                <a class="tag tag--pill tag--main settings__btn" href="{% url 'update-education' education.id %}"><i class="im im-edit"></i> Edit</a>
+                <a class="tag tag--pill tag--main settings__btn" href="{% url 'delete-education' education.id %}"><i class="im im-x-mark-circle-o"></i>
+                  Delete</a>
+              </td>
+            </tr>
+            {% endfor %}
+          </table>
+
+          <div class="settings">
+            <h3 class="settings__title">Recipes</h3>
+            <a class="tag tag--pill tag--main settings__btn tag--lg" href="{% url 'create-recipe' %}"><i class="im im-plus"></i> Add Recipes</a>
+          </div>
+
+          <table class="settings__table">
+            {% for recipe in recipes %}
+            <tr>
+              <td class="settings__thumbnail">
+                <a href="{% url 'single-recipe' recipe.id %}"><img src="{{recipe.imageURL}}" alt="Project Thumbnail" /></a>
+              </td>
+              <td class="settings__tableInfo">
+                <a href="{% url 'single-recipe' recipe.id %}">{{recipe.title}}</a>
+                <p>{{recipe.description}}</p>
+              </td>
+              <td class="settings__tableActions">
+                <a class="tag tag--pill tag--main settings__btn" href="{% url 'update-recipe' recipe.id %}"><i class="im im-edit"></i> Edit</a>
+                <a class="tag tag--pill tag--main settings__btn" href="{% url 'delete-recipe' recipe.id %}"><i class="im im-x-mark-circle-o"></i>
+                  Delete</a>
+              </td>
+            </tr>
+            {% endfor %}
+            
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+{% endblock %}

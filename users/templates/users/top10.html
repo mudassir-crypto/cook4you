@@ -1,0 +1,49 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+
+<main class="home">
+    <section class="hero-section text-center">
+      <div class="container container--narrow">
+        <div class="hero-section__box">
+          <h2><span>Top 10</span> Recipes of the week</h2>
+      </div>
+    </section>
+    <!-- Search Result: DevList -->
+    <section class="projectsList">
+      <div class="container">
+        <div class="grid grid--three">
+          
+          {% for recipe in recipes %}
+          <div class="column">
+            <div class="card project">
+              <a href="{% url 'single-recipe' recipe.id %}" class="project">
+                <img src="{{recipe.imageURL}}" alt="project thumbnail" />
+                <div class="card__body">
+                  <h3 class="project__title">{{recipe.title}}</h3>
+                  <p><a class="project__author" style="color: red;" href="{% url 'profile' recipe.owner.id %}">By {{recipe.owner.name}}</a></p>
+                  <p class="project--rating">
+                    <span style="font-weight: bold;">{{ recipe.vote_ratio }}%</span> Postitive
+                    Feedback ({{ recipe.vote_total }} Vote{{ recipe.vote_total|pluralize:'s' }})
+                  </p>
+                  <div class="project__tags">
+                    {% for cuisine in recipe.cuisine.all %}
+                    <span class="tag tag--pill tag--main">
+                      <small>{{cuisine}}</small>
+                    </span>
+                    {% endfor %}
+                  </div>
+                </div>
+              </a>
+            </div>
+          </div>
+          {% endfor %}
+
+        </div>
+      </div>
+    </section>
+    
+    {% include 'pagination.html' with queryset=recipes %}
+  </main>
+
+{% endblock %}
