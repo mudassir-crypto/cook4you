@@ -1,3 +1,9 @@
+# Cook4You
+
+Due to the ongoing pandemic the hospitality industry took a huge hit which has led many low daily wage workers comprising of chefs and waiters to lose their jobs. 
+
+Cook4you aims to provide a medium through which restaurants/hotel owners can connect with chefs all over the country and provide them their livelihood.
+
 
 ## Run Locally
 
